@@ -4,13 +4,12 @@ import com.codeborne.selenide.Configuration;
 import org.junit.jupiter.api.Test;
 
 import java.time.Duration;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 
 import static com.codeborne.selenide.Condition.appear;
 import static com.codeborne.selenide.Selectors.withText;
 import static com.codeborne.selenide.Selenide.*;
 import static org.openqa.selenium.Keys.BACK_SPACE;
+import static ru.netology.web.DateUtils.getDate;
 
 class DeliveryCard {
     @Test
@@ -20,10 +19,8 @@ class DeliveryCard {
         $("span[data-test-id = city]").click();
         $("input[placeholder=Город]").setValue("Москва");
         $("span[class=menu-item__control]").click();
-        // get current date + 3 days
-        LocalDate currentDate = LocalDate.now().plusDays(4);
-        String expectedDate = currentDate.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
         $x("//input[@placeholder='Дата встречи']").sendKeys(BACK_SPACE, BACK_SPACE, BACK_SPACE, BACK_SPACE, BACK_SPACE, BACK_SPACE, BACK_SPACE, BACK_SPACE);
+        String expectedDate = getDate(4);
         $x("//input[@placeholder='Дата встречи']").setValue(expectedDate);
         $x("//td[@class='calendar__day calendar__day_state_current']").click();
         $("span[data-test-id=name]").click();
